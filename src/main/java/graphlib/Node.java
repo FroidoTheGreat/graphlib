@@ -3,10 +3,10 @@ package graphlib;
 import java.util.Collection;
 import java.util.Map;
 
-public class Node
+public class Node<T extends Number>
 {
     private String name;
-    private Map<Node, Double> neighbors;
+    private Map<Node<T>, T> neighbors;
 
     public Node(String name)
     {
@@ -19,34 +19,35 @@ public class Node
         return name;
     }
 
-    public void addDirectedEdge(Node neighbor, double weight)
+    public void addDirectedEdge(Node<T> neighbor, T weight)
     {
         neighbors.put(neighbor, weight);
     }
 
-    public void addUndirectedEdge(Node neighbor, double weight)
+    public void addUndirectedEdge(Node<T> neighbor, T weight)
     {
         addDirectedEdge(neighbor, weight);
         neighbor.addDirectedEdge(this, weight);
     }
 
-    public void addUnweightedDirectedEdge(Node neighbor)
+    public void addUnweightedDirectedEdge(Node<T> neighbor)
     {
-        addDirectedEdge(neighbor, 1.0);
+        //addDirectedEdge(neighbor, makeDefault());
+        addDirectedEdge(neighbor, (T) Integer.valueOf(1));
     }
 
-    public void addUnweightedUndirectedEdge(Node neighbor)
+    public void addUnweightedUndirectedEdge(Node<T> neighbor)
     {
         addUnweightedDirectedEdge(neighbor);
         neighbor.addUnweightedDirectedEdge(this);
     }
 
-    public Collection<Node> getNeighbors()
+    public Collection<Node<T>> getNeighbors()
     {
         return neighbors.keySet();
     }
 
-    public double getWeight(Node neighbor)
+    public T getWeight(Node<T> neighbor)
     {
         return neighbors.get(neighbor);
     }
@@ -57,9 +58,10 @@ public class Node
         return name;
     }
 
-    public boolean hasEdge(Node neighbor)
+    public boolean hasEdge(Node<T> neighbor)
     {
         return neighbors.containsKey(neighbor);
     }
 
+    
 }

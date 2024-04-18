@@ -13,9 +13,9 @@ public class TestGraph
     @Test
     public void testGetOrCreateNode()
     {
-        Graph graph = new Graph();
-        Node a = graph.getOrCreateNode("A");
-        Node b = graph.getOrCreateNode("B");
+        Graph<Integer> graph = new Graph<>();
+        Node<Integer> a = graph.getOrCreateNode("A");
+        Node<Integer> b = graph.getOrCreateNode("B");
         a.addUndirectedEdge(b, 1);
         assert a.getNeighbors().contains(b);
         assert b.getNeighbors().contains(a);
@@ -26,21 +26,21 @@ public class TestGraph
     @Test
     public void testNoDuplicates()
     {
-        Graph graph = new Graph();
-        Node a = graph.getOrCreateNode("A");
-        Node b = graph.getOrCreateNode("A");
+        Graph<Integer> graph = new Graph<Integer>();
+        Node<Integer> a = graph.getOrCreateNode("A");
+        Node<Integer> b = graph.getOrCreateNode("A");
         assert a == b;
     }
 
     @Test
     public void testStaticFactoryMethod() throws Exception
     {
-        Graph g = Graph.readUndirectedUnweightedGraph(new FileInputStream("datafiles/graph1.txt"));
-        Node zero = g.getOrCreateNode("0");
-        Node one = g.getOrCreateNode("1");
-        Node two = g.getOrCreateNode("2");
-        Node three = g.getOrCreateNode("3");
-        Node four = g.getOrCreateNode("4");
+        Graph<Integer> g = Graph.readUndirectedUnweightedGraph(new FileInputStream("datafiles/graph1.txt"));
+        Node<Integer> zero = g.getOrCreateNode("0");
+        Node<Integer> one = g.getOrCreateNode("1");
+        Node<Integer> two = g.getOrCreateNode("2");
+        Node<Integer> three = g.getOrCreateNode("3");
+        Node<Integer> four = g.getOrCreateNode("4");
         assert zero.hasEdge(one);
         assert one.hasEdge(two);
         assert three.hasEdge(four);
