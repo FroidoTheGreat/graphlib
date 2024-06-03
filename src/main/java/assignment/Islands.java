@@ -6,8 +6,9 @@ import java.util.Scanner;
 import graphlib.Graph;
 import graphlib.Node;
 import graphlib.NodeVisitor;
+import java.io.FileInputStream;
 
-public class TestIslands
+public class Islands
 {
     private static String makeName(int r, int c)
     {
@@ -30,15 +31,8 @@ public class TestIslands
         }
     }
 
-    public static void main(String[] args)
+    public static int largestIsland(String s)
     {
-        String s = 
-"4 4\n" + 
-"1100\n" + 
-"0010\n" + 
-"1000\n" +
-"1111\n";
-
         Graph g = readIslands(new java.io.ByteArrayInputStream(s.getBytes()));
 
         int max = 0;
@@ -52,7 +46,25 @@ public class TestIslands
             }
         }
 
-        System.out.println("Max island size: " + max);
+        return max;
+    }
+    public static int largestIsland(Graph g) {
+        int max = 0;
+        for (Node n : g.getAllNodes())
+        {
+            CountingVisitor counting = new CountingVisitor();
+            g.bfs(n.getName(), counting);
+            if (counting.getCount() > max)
+            {
+                max = counting.getCount();
+            }
+        }
+
+        return max;
+    }
+    public static int largestIslandFromFile(String fileName) throws Exception{
+        Graph g = readIslands(new FileInputStream("datafiles/islands/" + fileName + ".txt"));
+        return largestIsland(g);
     }
 
     public static Graph readIslands(InputStream in)

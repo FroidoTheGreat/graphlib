@@ -75,4 +75,12 @@ public class ComponentsTest
         assertEquals(2, g.getNumComponents());
     }
 
+    @Test
+    public void testEmptyGraph()
+    {
+        Graph g = new Graph();
+
+        assertEquals(0, g.getNumComponents());
+    }
+
 }

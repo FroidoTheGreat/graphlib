@@ -467,4 +467,29 @@ public class Graph
         return newGraph;
     }
 
+    public HashSet<Node> getReachable(Node start) {
+        NodeGatherer gatherer = new NodeGatherer();
+        bfs(start.getName(), gatherer);
+        return gatherer.getNodes();
+    }
+    public HashSet<Node> getReachable(String startName) {
+        Node start = nodes.get(startName);
+        if (start == null) {
+            throw new IllegalArgumentException("Node " + startName + " not found");
+        }
+        return getReachable(start);
+    }
+    private class NodeGatherer implements NodeVisitor {
+        private HashSet<Node> nodes = new HashSet<>();
+
+        public void visit(Node node) {
+            nodes.add(node);
+        }
+
+        public HashSet<Node> getNodes() {
+            return nodes;
+        }
+
+    }
+
 }
